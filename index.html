@@ -136,15 +136,15 @@ tr:nth-child(even) {
                   <script src="app.js"></script>
                   <script>var database = firebase.database();
 
-                        database.ref('vendors').on('child_added', function(data) {
+                        database.ref('users').on('child_added', function(data) {
                             add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor,data.key);
                             var lastkey = data.key;
                             nextkey = parseInt(lastkey)+1;
                         });
-                        database.ref('vendors').on('child_changed', function(data) {
+                        database.ref('users').on('child_changed', function(data) {
                             update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor,data.key)
                         });
-                        database.ref('vendors').on('child_removed', function(data) {
+                        database.ref('users').on('child_removed', function(data) {
                             remove_data_table(data.key)
                         });
                 
@@ -164,7 +164,7 @@ tr:nth-child(even) {
                             //console.log("key is "+key);
                         }
                         function new_data(name,email,pic,balance,key){
-                            database.ref('vendors/' + key).set({
+                            database.ref('users/' + key).set({
                                 vendorname: name,
                                 phonenumber_vendor: email,
                                 comments_vendor : pic,
@@ -172,7 +172,7 @@ tr:nth-child(even) {
                             });
                         }
                         function update_data(name,email,pic,balance,key){
-                            database.ref('vendors/' + key).update({
+                            database.ref('users/' + key).update({
                                 vendorname: name,
                                 phonenumber_vendor: email,
                                 comments_vendor : pic,
@@ -191,7 +191,7 @@ tr:nth-child(even) {
                         
                         $("#btnSave" ).click(function() {
                             if($("#txtType").val() == 'N'){
-                                database.ref('vendors').once("value").then(function(snapshot) {
+                                database.ref('users').once("value").then(function(snapshot) {
                                     if(snapshot.numChildren()==0){
                                         nextkey = 1;
                                     }
@@ -205,7 +205,7 @@ tr:nth-child(even) {
                         $(document).on("click",".btnEdit",function(event){
                             event.preventDefault();
                             key = $(this).attr("data-key");
-                            database.ref('vendors/'+key).once("value").then(function(snapshot){
+                            database.ref('users/'+key).once("value").then(function(snapshot){
                                 $("#txtName").val(snapshot.val().vendorname);
                                 $("#txtEmail").val(snapshot.val().phonenumber_vendor);
                                 $("#txtPic").val(snapshot.val().comments_vendor);		
@@ -217,7 +217,7 @@ tr:nth-child(even) {
                         $(document).on("click",".btnRemove",function(event){
                             event.preventDefault();
                             key = $(this).attr("data-key");
-                            database.ref('vendors/' + key).remove();
+                            database.ref('users/' + key).remove();
                         })
                         
                         $( "#btnClose,.btnClose" ).click(function() {
