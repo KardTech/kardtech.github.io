@@ -107,9 +107,9 @@ tr:nth-child(even) {
                                     <table id="custable">
                           <tr>
                             <th>Name</th>
-                            <th>Phone number</th>
+                            
                             <th>Comments</th>
-                            <th>Balance to be paid</th>
+                            
                             <th>Edit entry</th>
                             <th>Remove entry</th>
                           </tr>
@@ -137,38 +137,38 @@ tr:nth-child(even) {
                   <script>var database = firebase.database();
 
                         database.ref('users').on('child_added', function(data) {
-                            add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor);
+                            add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor);
                             nextkey = parseInt(lastkey)+1;
                         });
                         database.ref('users').on('child_changed', function(data) {
-                            update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor)
+                            update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor)
                         });
                         database.ref('users').on('child_removed', function(data) {
                             remove_data_table(data.phonenumber_vendor)
                         });
                 
-                        function add_data_table(name,pic,email,balance,key){
-                            $("#custable").append('<tr id="'+key+'"><th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th></tr>');
+                        function add_data_table(name,pic,email){
+                            $("#custable").append('<tr id="'+email+'"><th>'+name+'</th><th><a href="#" data-key="'+email+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+email+'">Remove</a></th></tr>');
                             //<footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer>
                             //$("#card-list").append('<div class="key" id="'+key+'"><div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer></div></div>');
                         }
-                        function update_data_table(name,pic,email,balance,key){
+                        function update_data_table(name,pic,email,balance){
                             //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" class="card-footer-item btnEdit"  data-key="'+key+'">Edit</a><a  data-key="'+key+'" href="#" class="card-footer-item btnRemove">Remove</a></footer></div>');
                             //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div></div>
-                            $("#custable #"+email).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
+                            $("#custable #"+email).html('<th>'+name+'</th><th>'+pic+'</th><th><a href="#" data-key="'+email+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+email+'">Remove</a></th>');
                         }
                         function remove_data_table(email){
                             //$("#card-list #"+key).remove();
                             $("#custable #"+email).remove();
                             //console.log("key is "+key);
                         }
-                        function new_data(name,email,pic,balance,key){
+                        function new_data(name,email,pic){
                             database.ref('users/' +email ).set({
                                 vendorname: name,
                                 comments_vendor : pic,
                             });
                         }
-                        function update_data(name,email,pic,balance,key){
+                        function update_data(name,email,pic){
                             database.ref('users/' + email).update({
                                 vendorname: name,
                                 comments_vendor : pic,
@@ -190,17 +190,17 @@ tr:nth-child(even) {
                                     if(snapshot.numChildren()==0){
                                         nextkey = 1;
                                     }
-                                    new_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val(),0,nextkey);
+                                    new_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val());
                                 });
                             }else{
-                                update_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val(),0,$("#txtKey").val());
+                                update_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val());
                             }
                             $("#btnClose").click();
                         });
                         $(document).on("click",".btnEdit",function(event){
                             event.preventDefault();
                             key = $(this).attr("data-key");
-                            database.ref('users/'+key).once("value").then(function(snapshot){
+                            database.ref('users/'+email).once("value").then(function(snapshot){
                                 $("#txtName").val(snapshot.val().vendorname);
                                 $("#txtEmail").val(snapshot.val().phonenumber_vendor);
                                 $("#txtPic").val(snapshot.val().comments_vendor);		
