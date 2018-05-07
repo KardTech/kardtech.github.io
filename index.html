@@ -104,6 +104,7 @@ limitations under the License.
             var code = window.prompt('Enter the verification code you received by SMS');
             if (code) {
               confirmationResult.confirm(code).then(function () {
+                console.error('Error while checking the verification code', error);
                 window.close();
               }).catch(function (error) {
                 // User couldn't sign in (bad verification code?)
