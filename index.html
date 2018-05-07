@@ -155,21 +155,21 @@ tr:nth-child(even) {
                         function update_data_table(name,pic,email,balance,key){
                             //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" class="card-footer-item btnEdit"  data-key="'+key+'">Edit</a><a  data-key="'+key+'" href="#" class="card-footer-item btnRemove">Remove</a></footer></div>');
                             //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div></div>
-                            $("#custable #"+phonenumber_vendor).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
+                            $("#custable #"+email).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
                         }
-                        function remove_data_table(key){
+                        function remove_data_table(email){
                             //$("#card-list #"+key).remove();
-                            $("#custable #"+phonenumber_vendor).remove();
+                            $("#custable #"+email).remove();
                             //console.log("key is "+key);
                         }
                         function new_data(name,email,pic,balance,key){
-                            database.ref('users/' +phonenumber_vendor ).set({
+                            database.ref('users/' +email ).set({
                                 vendorname: name,
                                 comments_vendor : pic,
                             });
                         }
                         function update_data(name,email,pic,balance,key){
-                            database.ref('users/' + phonenumber_vendor).update({
+                            database.ref('users/' + email).update({
                                 vendorname: name,
                                 comments_vendor : pic,
                             });
