@@ -144,7 +144,7 @@ var database = firebase.database();
 				balance_vendor : balance
 			});
 		}
-		$( "#btnAdd" ).click(function() {
+		$("#btnAdd").click(function() {
 			$("#txtName").val("");
 			$("#txtEmail").val("");
 			$("#txtPic").val("");
