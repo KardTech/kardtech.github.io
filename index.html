@@ -137,15 +137,14 @@ tr:nth-child(even) {
                   <script>var database = firebase.database();
 
                         database.ref('users').on('child_added', function(data) {
-                            add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor,data.key);
-                            var lastkey = data.key;
+                            add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor);
                             nextkey = parseInt(lastkey)+1;
                         });
                         database.ref('users').on('child_changed', function(data) {
-                            update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor,data.key)
+                            update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor)
                         });
                         database.ref('users').on('child_removed', function(data) {
-                            remove_data_table(data.key)
+                            remove_data_table(data.phonenumber_vendor)
                         });
                 
                         function add_data_table(name,pic,email,balance,key){
@@ -156,27 +155,23 @@ tr:nth-child(even) {
                         function update_data_table(name,pic,email,balance,key){
                             //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" class="card-footer-item btnEdit"  data-key="'+key+'">Edit</a><a  data-key="'+key+'" href="#" class="card-footer-item btnRemove">Remove</a></footer></div>');
                             //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div></div>
-                            $("#custable #"+key).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
+                            $("#custable #"+phonenumber_vendor).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
                         }
                         function remove_data_table(key){
                             //$("#card-list #"+key).remove();
-                            $("#custable #"+key).remove();
+                            $("#custable #"+phonenumber_vendor).remove();
                             //console.log("key is "+key);
                         }
                         function new_data(name,email,pic,balance,key){
-                            database.ref('users/' + key).set({
+                            database.ref('users/' +phonenumber_vendor ).set({
                                 vendorname: name,
-                                phonenumber_vendor: email,
                                 comments_vendor : pic,
-                                balance_vendor : balance
                             });
                         }
                         function update_data(name,email,pic,balance,key){
-                            database.ref('users/' + key).update({
+                            database.ref('users/' + phonenumber_vendor).update({
                                 vendorname: name,
-                                phonenumber_vendor: email,
                                 comments_vendor : pic,
-                                balance_vendor : balance
                             });
                         }
                         $("#btnAdd").click(function() {
