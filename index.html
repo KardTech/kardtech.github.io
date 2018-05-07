@@ -105,7 +105,7 @@ limitations under the License.
             if (code) {
               confirmationResult.confirm(code).then(function () {
                 console.error('Error while checking the verification code', error);
-                window.close();
+                //window.close();
               }).catch(function (error) {
                 // User couldn't sign in (bad verification code?)
                 console.error('Error while checking the verification code', error);
