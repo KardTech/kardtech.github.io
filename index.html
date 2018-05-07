@@ -200,7 +200,7 @@ tr:nth-child(even) {
                         $(document).on("click",".btnEdit",function(event){
                             event.preventDefault();
                             key = $(this).attr("data-key");
-				console.log("Line 203 key is "+key);
+				console.log("Line of 203 key is "+key);
                             database.ref('users/'+key).once("value").then(function(snapshot){
                                 $("#txtName").val(snapshot.val().vendorname);
                                 $("#txtEmail").val(key);
