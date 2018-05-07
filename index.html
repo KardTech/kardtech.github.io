@@ -138,7 +138,7 @@ tr:nth-child(even) {
 
                         database.ref('users').on('child_added', function(data) {
                             add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor);
-                            nextkey = parseInt(lastkey)+1;
+                            //nextkey = parseInt(lastkey)+1;
                         });
                         database.ref('users').on('child_changed', function(data) {
                             update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor)
@@ -200,7 +200,7 @@ tr:nth-child(even) {
                         $(document).on("click",".btnEdit",function(event){
                             event.preventDefault();
                             key = $(this).attr("data-key");
-                            database.ref('users/'+email).once("value").then(function(snapshot){
+                            database.ref('users/'+key).once("value").then(function(snapshot){
                                 $("#txtName").val(snapshot.val().vendorname);
                                 $("#txtEmail").val(snapshot.val().phonenumber_vendor);
                                 $("#txtPic").val(snapshot.val().comments_vendor);		
