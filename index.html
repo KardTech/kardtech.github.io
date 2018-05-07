@@ -202,7 +202,7 @@ tr:nth-child(even) {
                             key = $(this).attr("data-key");
                             database.ref('users/'+key).once("value").then(function(snapshot){
                                 $("#txtName").val(snapshot.val().vendorname);
-                                $("#txtEmail").val(snapshot.val().phonenumber_vendor);
+                                $("#txtEmail").val(snapshot.val().key);
                                 $("#txtPic").val(snapshot.val().comments_vendor);		
                                 $("#txtType").val("E");	
                                 $("#txtKey").val(key);	
