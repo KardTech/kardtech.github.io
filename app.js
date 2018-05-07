@@ -114,18 +114,18 @@ var database = firebase.database();
 		});
 
 		function add_data_table(name,pic,email,balance,key){
-			$("#custable").append('<tr id="'+key+'"><th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th></tr>');
+			document.getElementById("#custable").append('<tr id="'+key+'"><th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th></tr>');
 			//<footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer>
 			//$("#card-list").append('<div class="key" id="'+key+'"><div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer></div></div>');
 		}
 		function update_data_table(name,pic,email,balance,key){
 			//$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" class="card-footer-item btnEdit"  data-key="'+key+'">Edit</a><a  data-key="'+key+'" href="#" class="card-footer-item btnRemove">Remove</a></footer></div>');
 			//$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div></div>
-			$("#custable #"+key).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
+			document.getElementById("#custable #"+key).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
 		}
 		function remove_data_table(key){
 			//$("#card-list #"+key).remove();
-			$("#custable #"+key).remove();
+			document.getElementById("#custable #"+key).remove();
 			//console.log("key is "+key);
 		}
 		function new_data(name,email,pic,balance,key){
@@ -144,48 +144,48 @@ var database = firebase.database();
 				balance_vendor : balance
 			});
 		}
-		$("#btnAdd").click(function() {
-			$("#txtName").val("");
-			$("#txtEmail").val("");
-			$("#txtPic").val("");
-			$("#txtType").val("N");
-			$("#txtKey").val("0");
-			$( "#modal" ).addClass( "is-active" );
+		document.getElementById("#btnAdd").click(function() {
+			document.getElementById("#txtName").val("");
+			document.getElementById("#txtEmail").val("");
+			document.getElementById("#txtPic").val("");
+			document.getElementById("#txtType").val("N");
+			document.getElementById("#txtKey").val("0");
+			document.getElementById( "#modal" ).addClass( "is-active" );
 
 		});
 		
-		$("#btnSave" ).click(function() {
-			if($("#txtType").val() == 'N'){
+		document.getElementById("#btnSave" ).click(function() {
+			if(document.getElementById("#txtType").val() == 'N'){
 				database.ref('vendors').once("value").then(function(snapshot) {
 					if(snapshot.numChildren()==0){
 						nextkey = 1;
 					}
-					new_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val(),0,nextkey);
+					new_data(document.getElementById("#txtName").val(),document.getElementById("#txtEmail").val(),document.getElementById("#txtPic").val(),0,nextkey);
 				});
 			}else{
-				update_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val(),0,$("#txtKey").val());
+				update_data(document.getElementById("#txtName").val(),document.getElementById("#txtEmail").val(),document.getElementById("#txtPic").val(),0,document.getElementById("#txtKey").val());
 			}
-			$("#btnClose").click();
+			document.getElementById("#btnClose").click();
 		});
-		$(document).on("click",".btnEdit",function(event){
+		document.getElementById(document).on("click",".btnEdit",function(event){
 			event.preventDefault();
-			key = $(this).attr("data-key");
+			key = document.getElementById(this).attr("data-key");
 			database.ref('vendors/'+key).once("value").then(function(snapshot){
-				$("#txtName").val(snapshot.val().vendorname);
-				$("#txtEmail").val(snapshot.val().phonenumber_vendor);
-				$("#txtPic").val(snapshot.val().comments_vendor);		
-				$("#txtType").val("E");	
-				$("#txtKey").val(key);	
+				document.getElementById("#txtName").val(snapshot.val().vendorname);
+				document.getElementById("#txtEmail").val(snapshot.val().phonenumber_vendor);
+				document.getElementById("#txtPic").val(snapshot.val().comments_vendor);		
+				document.getElementById("#txtType").val("E");	
+				document.getElementById("#txtKey").val(key);	
 			});
-			$( "#modal" ).addClass( "is-active" );
+			document.getElementById( "#modal" ).addClass( "is-active" );
 		});
-		$(document).on("click",".btnRemove",function(event){
+		document.getElementById(document).on("click",".btnRemove",function(event){
 			event.preventDefault();
-			key = $(this).attr("data-key");
+			key = document.getElementById(this).attr("data-key");
 			database.ref('vendors/' + key).remove();
 		})
 		
-		$( "#btnClose,.btnClose" ).click(function() {
-			$( "#modal" ).removeClass( "is-active" );
+		document.getElementById( "#btnClose,.btnClose" ).click(function() {
+			document.getElementById( "#modal" ).removeClass( "is-active" );
 		});
 window.addEventListener('load', initApp);
