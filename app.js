@@ -99,5 +99,93 @@ var initApp = function() {
         deleteAccount();
       });
 };
+var database = firebase.database();
 
+		database.ref('vendors').on('child_added', function(data) {
+			add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor,data.key);
+			var lastkey = data.key;
+			nextkey = parseInt(lastkey)+1;
+		});
+		database.ref('vendors').on('child_changed', function(data) {
+			update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor,data.val().balance_vendor,data.key)
+		});
+		database.ref('vendors').on('child_removed', function(data) {
+			remove_data_table(data.key)
+		});
+
+		function add_data_table(name,pic,email,balance,key){
+			$("#custable").append('<tr id="'+key+'"><th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th></tr>');
+			//<footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer>
+			//$("#card-list").append('<div class="key" id="'+key+'"><div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer></div></div>');
+		}
+		function update_data_table(name,pic,email,balance,key){
+			//$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" class="card-footer-item btnEdit"  data-key="'+key+'">Edit</a><a  data-key="'+key+'" href="#" class="card-footer-item btnRemove">Remove</a></footer></div>');
+			//$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div></div>
+			$("#custable #"+key).html('<th>'+name+'</th><th>'+email+'</th><th>'+pic+'</th><th>'+balance+'</th><th><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></th>');
+		}
+		function remove_data_table(key){
+			//$("#card-list #"+key).remove();
+			$("#custable #"+key).remove();
+			//console.log("key is "+key);
+		}
+		function new_data(name,email,pic,balance,key){
+			database.ref('vendors/' + key).set({
+				vendorname: name,
+				phonenumber_vendor: email,
+				comments_vendor : pic,
+				balance_vendor : balance
+			});
+		}
+		function update_data(name,email,pic,balance,key){
+			database.ref('vendors/' + key).update({
+				vendorname: name,
+				phonenumber_vendor: email,
+				comments_vendor : pic,
+				balance_vendor : balance
+			});
+		}
+		$( "#btnAdd" ).click(function() {
+			$("#txtName").val("");
+			$("#txtEmail").val("");
+			$("#txtPic").val("");
+			$("#txtType").val("N");
+			$("#txtKey").val("0");
+			$( "#modal" ).addClass( "is-active" );
+
+		});
+		
+		$("#btnSave" ).click(function() {
+			if($("#txtType").val() == 'N'){
+				database.ref('vendors').once("value").then(function(snapshot) {
+					if(snapshot.numChildren()==0){
+						nextkey = 1;
+					}
+					new_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val(),0,nextkey);
+				});
+			}else{
+				update_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val(),0,$("#txtKey").val());
+			}
+			$("#btnClose").click();
+		});
+		$(document).on("click",".btnEdit",function(event){
+			event.preventDefault();
+			key = $(this).attr("data-key");
+			database.ref('vendors/'+key).once("value").then(function(snapshot){
+				$("#txtName").val(snapshot.val().vendorname);
+				$("#txtEmail").val(snapshot.val().phonenumber_vendor);
+				$("#txtPic").val(snapshot.val().comments_vendor);		
+				$("#txtType").val("E");	
+				$("#txtKey").val(key);	
+			});
+			$( "#modal" ).addClass( "is-active" );
+		});
+		$(document).on("click",".btnRemove",function(event){
+			event.preventDefault();
+			key = $(this).attr("data-key");
+			database.ref('vendors/' + key).remove();
+		})
+		
+		$( "#btnClose,.btnClose" ).click(function() {
+			$( "#modal" ).removeClass( "is-active" );
+		});
 window.addEventListener('load', initApp);
