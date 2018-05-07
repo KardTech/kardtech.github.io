@@ -43,12 +43,6 @@ var handleSignedInUser = function(user) {
   document.getElementById('name').textContent = user.displayName;
   document.getElementById('email').textContent = user.email;
   document.getElementById('phone').textContent = user.phoneNumber;
-  if (user.photoURL){
-    document.getElementById('photo').src = user.photoURL;
-    document.getElementById('photo').style.display = 'block';
-  } else {
-    document.getElementById('photo').style.display = 'none';
-  }
   console.log("User Mobile number is "+user.phoneNumber);
 };
 
