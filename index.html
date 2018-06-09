@@ -22,25 +22,6 @@
   <script src="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.js"></script>
   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css" />
   <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
-  <style>
-  
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-  </style>
 </head>
 <body>
         <body>
@@ -51,30 +32,15 @@ tr:nth-child(even) {
                       <div id="main">
                         <div id="user-signed-in" class="hidden">
                           <div id="user-info">
-                            <div id="name"></div>
-                            <div id="email"></div>
                             <div id="phone"></div>
                             <div class="clearfix"></div>
                           </div>
-                          <div class="content">
-				  
-
-				  <p>Some content in content div</p>
-				  
-                            </div>
-                          <a href="#" id="myLink">Click !</a>
-				<a href="vendor.html" id="myLink">vendor</a>
-    <div id="result">The text will get loaded here</div>
-  
-    
-
+                          <div class="content"><p>Some content in content div</p></div>
                           <p>
                             <button id="sign-out">Sign Out</button>
-                            <button id="delete-account">Delete account</button></p>
-                            
-                                        
-                          
-                        </div>
+                            <button id="delete-account">Delete account</button>
+			  </p>
+			  </div>
                         <div id="user-signed-out" class="hidden">
                           <h4>You are signed out.</h4>
                           <div id="firebaseui-spa">
@@ -89,13 +55,5 @@ tr:nth-child(even) {
 	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 	crossorigin="anonymous"></script>
                   <script src="app.js"></script>
-		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script>
-      $("#myLink").on("click", function(){
-        $("#result").load("vendor.html");
-      });
-    </script>
-                  
-
 </body>
 </html>
