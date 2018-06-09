@@ -45,7 +45,7 @@ tr:nth-child(even) {
 <body>
         <body>
                 <div id="container">
-                    <h3>Firebase Demo Assignment</h3>
+                    <h3>Gopal Fireworks</h3>
                     <div id="loading">Loading...</div>
                     <div id="loaded" class="hidden">
                       <div id="main">
@@ -57,45 +57,14 @@ tr:nth-child(even) {
                             <div class="clearfix"></div>
                           </div>
                           <div class="content">
-                                <button id="btnAdd" class="button"><i class="fa fa-plus"></i> Add Vendor</button>
+				  <p>Some content in content div</p>
                             </div>
                           
 
                           <p>
                             <button id="sign-out">Sign Out</button>
                             <button id="delete-account">Delete account</button></p>
-                            <div id="modal" class="modal">
-                                    <div class="modal-background"></div>
-                                    <div class="modal-card">
-                                        <header class="modal-card-head">
-                                            <p class="modal-card-title">Add Vendor</p>
-                                            <button class="btnClose delete" aria-label="close"></button>
-                                        </header>
-                                        <section class="modal-card-body">
-                                            <div class="field">
-                                                <label class="label">Name</label>
-                                                <div class="control">
-                                                    <input type="hidden" id="txtType">
-                                                    <input type="hidden" id="txtKey">
-                                                    <input class="input" id="txtName" type="text" placeholder="Name">
-                                                </div>
-                                                <p class="help"> </p>
-                                            </div>
-                                            <div class="field">
-                                                <label class="label">Phone number</label>
-                                                <div class="control">
-                                                    <input class="input" id="txtEmail" type="text" placeholder="Phone number">
-                                                </div>
-                                                <p class="help"> </p>
-                                            </div>
-                                            <div class="field">
-                                                <label class="label">Comments</label>
-                                                <div class="control">
-                                                    <input class="input" id="txtPic" type="text" placeholder="Comments">
-                                                </div>
-                                                <p class="help"></p>
-                                            </div>
-                                        </section>
+                            
                                         <footer class="modal-card-foot">
                                             <button id="btnSave" class="button is-success">Save changes</button>
                                             <button id="btnClose" class="button">Cancel</button>
@@ -134,92 +103,7 @@ tr:nth-child(even) {
 	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 	crossorigin="anonymous"></script>
                   <script src="app.js"></script>
-                  <script>var database = firebase.database();
-
-                        database.ref('users').on('child_added', function(data) {
-                            add_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor);
-                            //nextkey = parseInt(lastkey)+1;
-                        });
-                        database.ref('users').on('child_changed', function(data) {
-                            update_data_table(data.val().vendorname,data.val().comments_vendor,data.val().phonenumber_vendor)
-                        });
-                        database.ref('users').on('child_removed', function(data) {
-                            remove_data_table(data.phonenumber_vendor)
-                        });
-                
-                        function add_data_table(name,pic,email){
-                            $("#custable").append('<tr id="'+email+'"><th>'+name+'</th><th>'+pic+'</th><th><a href="#" data-key="'+email+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+email+'">Remove</a></th></tr>');
-                            //<footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer>
-                            //$("#card-list").append('<div class="key" id="'+key+'"><div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" data-key="'+key+'" class="card-footer-item btnEdit">Edit</a><a href="#" class="card-footer-item btnRemove"  data-key="'+key+'">Remove</a></footer></div></div>');
-                        }
-                        function update_data_table(name,comments,phone){
-                            //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div><footer class="card-footer"><a href="#" class="card-footer-item btnEdit"  data-key="'+key+'">Edit</a><a  data-key="'+key+'" href="#" class="card-footer-item btnRemove">Remove</a></footer></div>');
-                            //$("#card-list #"+key).html('<div class="card"><div class="card-image"><figure class="image is-4by3"><img src="'+pic+'"></figure></div><div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+name+'</p><p class="subtitle is-6">@'+email+'</p></div></div></div></div>
-                            $("#custable #"+phone).html('<th>'+name+'</th><th>'+comments+'</th><th><a href="#" data-key="'+phone+'" class="card-footer-item btnEdit">Edit</a></th><th><a href="#" class="card-footer-item btnRemove"  data-key="'+phone+'">Remove</a></th>');
-                        }
-                        function remove_data_table(email){
-                            //$("#card-list #"+key).remove();
-                            $("#custable #"+email).remove();
-                            //console.log("key is "+key);
-                        }
-                        function new_data(name,email,pic){
-                            database.ref('users/' +email ).set({
-                                vendorname: name,
-                                comments_vendor : pic,
-                            });
-                        }
-                        function update_data(name,email,pic){
-                            database.ref('users/' + email).update({
-                                vendorname: name,
-                                comments_vendor : pic,
-                            });
-                        }
-                        $("#btnAdd").click(function() {
-                            $("#txtName").val("");
-                            $("#txtEmail").val("");
-                            $("#txtPic").val("");
-                            $("#txtType").val("N");
-                            $("#txtKey").val("0");
-                            $( "#modal" ).addClass( "is-active" );
-                
-                        });
-                        
-                        $("#btnSave" ).click(function() {
-                            if($("#txtType").val() == 'N'){
-                                database.ref('users').once("value").then(function(snapshot) {
-                                    if(snapshot.numChildren()==0){
-                                        nextkey = 1;
-                                    }
-                                    new_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val());
-                                });
-                            }else{
-                                update_data($("#txtName").val(),$("#txtEmail").val(),$("#txtPic").val());
-                            }
-                            $("#btnClose").click();
-                        });
-                        $(document).on("click",".btnEdit",function(event){
-                            event.preventDefault();
-                            key = $(this).attr("data-key");
-				console.log("Line of 203 key is "+key);
-                            database.ref('users/'+key).once("value").then(function(snapshot){
-                                $("#txtName").val(snapshot.val().vendorname);
-                                $("#txtEmail").val(key);
-                                $("#txtPic").val(snapshot.val().comments_vendor);		
-                                $("#txtType").val("E");	
-                                $("#txtKey").val(key);	
-                            });
-                            $( "#modal" ).addClass( "is-active" );
-                        });
-                        $(document).on("click",".btnRemove",function(event){
-                            event.preventDefault();
-                            key = $(this).attr("data-key");
-                            database.ref('users/' + key).remove();
-                        })
-                        
-                        $( "#btnClose,.btnClose" ).click(function() {
-                            $( "#modal" ).removeClass( "is-active" );
-                        });
-                    </script>
+                  
 
 </body>
 </html>
