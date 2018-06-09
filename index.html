@@ -57,7 +57,10 @@ tr:nth-child(even) {
                             <div class="clearfix"></div>
                           </div>
                           <div class="content">
+				  <a id="link" href="#">Click for vendor.html</a>
+
 				  <p>Some content in content div</p>
+				  <div id="include"></div>
                             </div>
                           
 
@@ -82,6 +85,11 @@ tr:nth-child(even) {
 	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 	crossorigin="anonymous"></script>
                   <script src="app.js"></script>
+		<script type="text/javascript"> 
+            $("#link").click(function(){
+                $("#include").load("include/vendor.html"); 
+            });
+        </script> 
                   
 
 </body>
